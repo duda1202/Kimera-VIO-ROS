@@ -1,6 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
 <launch>
-  <arg name="dataset_name" value="Euroc"/>
-  <arg name="verbosity"    default="0" />
+  <arg name="dataset_name" value="RealSenseIR"/>
+  <arg name="verbosity"    default="1" />
 
   <!-- Set online to true if you use rosbag play or sensor stream -->
   <arg name="online" default="true" />
@@ -22,16 +24,16 @@
   <arg name="use_lcd"   default="false"/>
   <arg name="visualize" default="true"/>
 
-  <arg name="use_online_cam_params" value="false"/>
+  <arg name="use_online_cam_params" value="true"/>
 
   <!-- Change rosbag path if online argument is false -->
   <arg name="rosbag_path" default="/home/duda/euroc.bag"
     unless="$(arg online)"/>
 
   <!-- Frame IDs -->
-  <arg name="base_link_frame_id" value="base_link"/>
-  <arg name="left_cam_frame_id"  value="cam0"/>
-  <arg name="right_cam_frame_id" value="cam1"/>
+  <arg name="base_link_frame_id" value="bobcat_base"/>
+  <arg name="left_cam_frame_id"  value="camera_front_tool_link"/>
+  <arg name="right_cam_frame_id" value="camera_front_tool_link"/>
 
   <!-- Perform stereo dense reconstruction? -->
   <arg name="run_stereo_dense"     default="false"/>

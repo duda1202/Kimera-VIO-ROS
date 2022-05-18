@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
 <launch>
   <!-- General Kimera-VIO-ROS launch file. Change arguments in your own launch
   file and include this one to launch KimeraVIO on the dataset of your choice -->
@@ -37,20 +39,20 @@
   <arg name="path_to_vocab" default="$(find kimera_vio)/vocabulary/ORBvoc.yml"/>
 
   <!-- Subscribed Topics -->
-  <arg name="left_cam_topic"                    default="/cam0/image_raw"/>
-  <arg name="left_cam_info_topic"               default="/cam0/camera_info"/>
-  <arg name="right_cam_topic"                   default="/cam1/image_raw"/>
-  <arg name="right_cam_info_topic"              default="/cam1/camera_info"/>
-  <arg name="imu_topic"                         default="/imu0"/>
+  <arg name="left_cam_topic"                    default="/camera_front_tool/color/image_raw"/>
+  <arg name="left_cam_info_topic"               default="/camera_front_tool/color/camera_info"/>
+  <arg name="right_cam_topic"                   default="/dalsa_camera_720p/image_raw"/>
+  <arg name="right_cam_info_topic"              default="/camera_front_tool/color/camera_info"/>
+  <arg name="imu_topic"                         default="/imu_rion"/>
   <!-- Empty string ("") means no ground-truth available. Used for init if
    requested to do ground-truth initialization. -->
   <arg name="odometry_ground_truth_topic"       default=""/>
 
   <!-- Frame IDs -->
   <arg name="world_frame_id"     default="world"/>
-  <arg name="base_link_frame_id" default="base_link"/>
+  <arg name="base_link_frame_id" default="bobcat_base"/>
   <arg name="map_frame_id"       default="map"/>
-  <arg name="left_cam_frame_id"  default="left_cam"/>
+  <arg name="left_cam_frame_id"  default="camera_front_tool_link"/>
   <arg name="right_cam_frame_id" default="right_cam"/>
 
   <!-- General parameters -->
