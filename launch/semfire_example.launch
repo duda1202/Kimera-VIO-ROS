@@ -7,7 +7,7 @@
   <!-- Set online to true if you use rosbag play or sensor stream -->
   <arg name="online" default="true" />
   <!-- Set use_sim_time to true if you use rosbag with clock argument -->
-  <param name="use_sim_time" value="false"/>
+  <param name="use_sim_time" value="true"/>
   <!-- Set log_output to true and KimeraVIO will log output of all modules to
        the log_output_path location. -->
   <arg name="log_output" default="false"/>
@@ -18,8 +18,8 @@
   <arg name="log_gt_data" default="false"/>
   <arg name="gt_topic" default="/vicon/firefly_sbx/firefly_sbx"/>
 
-  <rosparam param="gt_gyro_bias"> [-0.002229, 0.0207, 0.07635] </rosparam>
-  <rosparam param="gt_accel_bias"> [-0.012492, 0.547666, 0.069073] </rosparam>
+  <!-- <rosparam param="gt_gyro_bias"> [-0.002229, 0.0207, 0.07635] </rosparam> -->
+  <!-- <rosparam param="gt_accel_bias"> [-0.012492, 0.547666, 0.069073] </rosparam> -->
 
   <arg name="use_lcd"   default="false"/>
   <arg name="visualize" default="true"/>
@@ -27,13 +27,30 @@
   <arg name="use_online_cam_params" value="true"/>
 
   <!-- Change rosbag path if online argument is false -->
-  <arg name="rosbag_path" default="/mnt/backup/rosbags/dataset_camera_2021-06-17-17-37-12_0.bag"
+  <arg name="rosbag_path" default="/mnt/backup/rosbags/2019_11_15_ranger/2019_11_15_semfire.bag"
     unless="$(arg online)"/>
 
-  <!-- Frame IDs -->
-  <arg name="base_link_frame_id" value="camera_link"/>
-  <arg name="left_cam_frame_id"  value="camera_infra1_optical_frame"/>
-  <arg name="right_cam_frame_id" value="camera_infra2_optical_frame"/>
+
+  <!-- Subscribed Topics (REALSENSE) -->
+  <arg name="left_cam_topic"                    default="/realsense/color/image_raw"/>
+  <arg name="left_cam_info_topic"               default="/realsense/color/camera_info"/>
+  <arg name="right_cam_topic"                   default="/realsense/color/image_raw"/>
+  <arg name="right_cam_info_topic"              default="/realsense/color/camera_info"/>
+  <arg name="imu_topic"                         default="/imu/data"/>
+
+  <!-- Subscribed Topics (DALSA-->
+<!--   <arg name="left_cam_topic"                    default="/dalsa_camera_720p/image_raw"/>
+  <arg name="left_cam_info_topic"               default="/dalsa_camera_720p/camera_info"/>
+  <arg name="right_cam_topic"                   default="/dalsa_camera_720p/image_raw"/>
+  <arg name="right_cam_info_topic"              default="/dalsa_camera_720p/camera_info"/>
+  <arg name="imu_topic"                         default="/imu/data"/> -->
+
+    <!-- Frame IDs -->
+  <arg name="world_frame_id"     default="world"/>
+  <arg name="base_link_frame_id" default="bobcat_base"/>
+  <arg name="map_frame_id"       default="map"/>
+  <arg name="left_cam_frame_id"  default="dalsa_optical_frame"/>
+  <arg name="right_cam_frame_id" default="dalsa_optical_frame"/>
 
   <!-- Perform stereo dense reconstruction? -->
   <arg name="run_stereo_dense"     default="false"/>
@@ -43,8 +60,8 @@
       <param name="input_camera_info_from_ros_params" value="true"/>
       <param name="first_camera_namespace"  value="infra1"/>
       <param name="second_camera_namespace" value="infra2"/>
-      <param name="first_output_frame"      value="camera_infra1_optical_frame"/>
-      <param name="second_output_frame"     value="camera_infra2_optical_frame"/>
+      <param name="first_output_frame"      value="realsense_color_optical_frame"/>
+      <param name="second_output_frame"     value="dev"/>
 
       <param name="depth/use_sgbm"          value="true"/>
       <param name="depth/do_median_blur"    value="false"/>
@@ -56,10 +73,10 @@
 
       <rosparam file="$(find kimera_vio_ros)/cfg/calib/euroc_camchain.yaml"/>
 
-      <remap from="raw/first/image"         to="/camera/infra1/image_raw"/>
-      <remap from="raw/second/image"        to="/camera/infra2/image_raw"/>
-      <remap from="raw/first/camera_info"   to="/camera/infra1/camera_info"/>
-      <remap from="raw/second/camera_info"  to="/camera/infra2/camera_info"/>
+      <remap from="raw/first/image"         to="/realsense/color/image_raw"/>
+      <remap from="raw/second/image"        to="/realsense/color/image_raw"/>
+      <remap from="raw/first/camera_info"   to="/realsense/color/camera_info"/>
+      <remap from="raw/second/camera_info"  to="/realsense/color/camera_info"/>
     </node>
   </group>
 
